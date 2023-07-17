@@ -27,7 +27,9 @@
     "mongoose": "^6.8.4",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.20",
+    "path": "^0.12.7",
     "react-icons": "^4.7.1",
-    "slugify": "^1.6.5"
+    "slugify": "^1.6.5",
+    "url": "^0.11.1"
   }
 }
