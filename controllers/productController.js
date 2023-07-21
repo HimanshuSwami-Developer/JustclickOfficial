@@ -210,7 +210,7 @@ export const productFiltersController = async (req, res) => {
     const { checked, radio } = req.body;
     let args = {};
     if (checked.length > 0) args.category = checked;
-    if(checked.length > 0) args.brand = checked; 
+    // if(checked.length > 0) args.brand = checked; 
     if (radio.length) args.price = { $gte: radio[0], $lte: radio[1] };
     const products = await productModel.find(args);
     res.status(200).send({
@@ -296,10 +296,9 @@ export const searchProductController = async (req, res) => {
 // similar products
 export const realtedProductController = async (req, res) => {
   try {
-    const { pid, cid, bid } = req.params;
+    const { pid, cid } = req.params;
     const products = await productModel
       .find({
-        brand:bid,
         category: cid,
         _id: { $ne: pid },
       })
@@ -308,7 +307,6 @@ export const realtedProductController = async (req, res) => {
       .populate("category");
     res.status(200).send({
       success: true,
-      
       products,
     });
     // console.log(populate("brand"));

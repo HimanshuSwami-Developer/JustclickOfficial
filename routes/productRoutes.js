@@ -69,7 +69,7 @@ router.get("/search/:keyword", searchProductController);
 router.get("/related-product/:pid/:cid", realtedProductController);
 
 //similar product
-router.get("/related-product/:pid/:bid", realtedProductController);
+// router.get("/related-product/:pid/bid", realtedProductController);
 
 //category wise product
 router.get("/product-category/:slug", productCategoryController);

@@ -131,7 +131,7 @@ export const singleCategoryController = async (req, res) => {
 //delete category
 export const deleteCategoryCOntroller = async (req, res) => {
   try {
-    const { id } = req.params;
+    const { id  } = req.params;
     await categoryModel.findByIdAndDelete(id);
     res.status(200).send({
       success: true,
