@@ -22,29 +22,6 @@ dotenv.config();
 
 
 
-// const configuration = new Configuration({
-//   apiKey: process.env.OPENAI_API_KEY,
-// });
-// const openai = new OpenAIApi(configuration);
-
-
-// app.post('/chat', async(req,res)=>{
-  
-// const response = await openai.createChatCompletion({
-//   model: "gpt-3.5-turbo",
-//   messages: [],
-//   temperature: 1,
-//   max_tokens: 256,
-//   top_p: 1,
-//   frequency_penalty: 0,
-//   presence_penalty: 0,
-// });
-
-// res.send(response.data.choices[0].text);
-
-// })
-
-
 
 //payment razor gateway
 export const gatewayInstance = new Razorpay({
@@ -63,7 +40,6 @@ const app = express();
 //middelwares
 app.use(cors());
 app.use(express.json({limit: '50mb'}));
-// app.use(express.urlencoded({extended:true}));
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(morgan("dev"));
 
@@ -95,7 +71,7 @@ app.get("/api/getURL",(req,res)=>{
 
 
 //rest api
-app.get("/", (req, res) => {
+app.get("*", (req, res) => {
   res.send("<h1>Welcome to ecommerce app</h1>");
 });
 
