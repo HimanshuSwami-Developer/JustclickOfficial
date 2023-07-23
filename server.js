@@ -70,7 +70,7 @@ app.get("/api/getURL",(req,res)=>{
 
 //rest api
 app.get("*", (req, res) => {
-  res.send("<div style='height:90vh;'><center><h1>Welcome to ecommerce app</h1></center></div>");
+  res.send("<div style='height:90vh; display:flex; flex-direction:column; justify-content:center;'><center><h1>Order Successful</h1><h3>Please Move to Orders Section</h3></center></div>");
     //  req.send(order.html);
 });
 
