@@ -21,8 +21,6 @@ import {fileURLToPath} from 'url';
 dotenv.config();
 
 
-
-
 //payment razor gateway
 export const gatewayInstance = new Razorpay({
   key_id: process.env.ID_KEY,
@@ -72,7 +70,8 @@ app.get("/api/getURL",(req,res)=>{
 
 //rest api
 app.get("*", (req, res) => {
-  res.send("<h1>Welcome to ecommerce app</h1>");
+  res.send("<div style='height:90vh;'><center><h1>Welcome to ecommerce app</h1></center></div>");
+    //  req.send(order.html);
 });
 
 //PORT
