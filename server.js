@@ -70,7 +70,7 @@ app.get("/api/getURL",(req,res)=>{
 
 //rest api
 app.get("*", (req, res) => {
-  res.send("<div style='height:90vh; display:flex; flex-direction:column; justify-content:center;'><center><h1>Order Successful</h1><h3>Please Move to Orders Section</h3></center></div>");
+  res.send("<div style='height:90vh; display:flex; flex-direction:column; justify-content:center;'><center><h1>Order Successful</h1><h2>Move to Orders Section  👇️ </h2><h3><a href='https://sore-pear-badger-cape.cyclic.app/dashboard/user/orders' style='text-decoration:none'>Please Click Here</a></h3></center></div>");
     //  req.send(order.html);
 });
 
