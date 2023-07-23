@@ -16,6 +16,8 @@ import {
   searchProductController,
   updateProductController,
   orderController,
+  CheckoutPayment,
+  VerifyPayment
   // reviewController,
   // getReviews,
 } from "../controllers/productController.js";
@@ -90,6 +92,13 @@ router.get("/product-brand/:slug", productBrandController);
 
 //payments routes
 router.post("/orders", orderController);
+
+//rezor
+router.post("/checkout",CheckoutPayment);
+
+//rezor
+router.post("/verify",VerifyPayment);
+
 
 //token
 router.get("/braintree/token", braintreeTokenController);

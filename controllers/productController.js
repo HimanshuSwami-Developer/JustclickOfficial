@@ -3,11 +3,14 @@ import categoryModel from "../models/categoryModel.js";
 import orderModel from "../models/orderModel.js";
 import fs from "fs";
 import slugify from "slugify";
+import  {gatewayInstance, secret_key}  from "./../server.js";
 import braintree from "braintree";
 import dotenv from "dotenv";
 import brandModel from "../models/brandModel.js";
 import reviewsModel from "../models/reviewsModel.js";
 /* import checksum generation utility */
+import crypto from "crypto";
+import  {Payment}  from "./../models/paymentModel.js";
 // import PaytmChecksum from "./PaytmChecksum";
 
 
@@ -20,6 +23,8 @@ var gateway = new braintree.BraintreeGateway({
   publicKey: process.env.BRAINTREE_PUBLIC_KEY,
   privateKey: process.env.BRAINTREE_PRIVATE_KEY,
 });
+
+
 
 export const createProductController = async (req, res) => {
   try {
@@ -443,6 +448,78 @@ export const brainTreePaymentController = async (req, res) => {
   }
 };
 
+
+
+//razor payment
+
+export const CheckoutPayment = async (req, res) => {
+  try{
+    const { cart,user } = req.body;
+    let total = 0;
+    cart.map((i) => {
+      total += i.price;
+    });
+    console.log(total);
+    const options = {
+        amount: Number(total * 100),
+        currency:'INR',
+        receipt:"order-12",
+        }
+
+  
+
+    const orders = await gatewayInstance.orders.create(options)
+
+    
+    res.status(200).json({success:true,orders});
+    
+     
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
+export const VerifyPayment= async (req,res)=>{
+
+  const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
+
+
+  const body = razorpay_order_id + "|" + razorpay_payment_id;
+
+  const expectedSignature = crypto.createHmac("sha256", secret_key).update(body.toString()).digest("hex");
+
+
+  const isAuthentic = expectedSignature === razorpay_signature;
+
+  if (isAuthentic) {
+    // Database comes here
+
+    await Payment.create({
+      razorpay_order_id,
+      razorpay_payment_id,
+      razorpay_signature,
+    });
+
+    console.log("verify");
+
+    // const check=CheckoutPayment(cart,user);
+    
+    // console.log(check)
+    
+    res.redirect(
+      `${process.env.REDIRECT_URL}/paymentsuccess?reference=${razorpay_payment_id}`
+    );
+    
+
+  } else {
+    res.status(400).json({
+      success: false,
+    });
+  
+}
+ 
+}
 
 
 
