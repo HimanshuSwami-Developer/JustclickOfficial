@@ -96,7 +96,11 @@ app.get("/api/getURL",(req,res)=>{
 
 //rest api
 app.get("/", (req, res) => {
-  res.send("<center><h1>ORDER SUCCESSFUL</h1><center>");
+  res.redirect(
+    `https://sore-pear-badger-cape.cyclic.app/api/v1/product/verify`,
+  );
+  
+  // res.send("<center><h1>ORDER SUCCESSFUL</h1><center>");
 });
 
 //PORT
