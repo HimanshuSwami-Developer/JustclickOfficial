@@ -28,7 +28,7 @@ var gateway = new braintree.BraintreeGateway({
 
 export const createProductController = async (req, res) => {
   try {
-    const { name, description, price, userquantity,category,brand, quantity, shipping } =
+    const { name, description, price, userquantity,category,brand, quantity,model,importantDescription,extraDescription, size,shipping } =
       req.fields;
     const { photo } = req.files;
     //alidation
@@ -159,7 +159,7 @@ export const deleteProductController = async (req, res) => {
 //upate producta
 export const updateProductController = async (req, res) => {
   try {
-    const { name, description, price,userquantity, category,brand,quantity, shipping } =
+    const { name, description, price,userquantity, category,brand,quantity,model,importantDescription,extraDescription, size, shipping } =
       req.fields;
     const { photo } = req.files;
     //alidation
@@ -545,6 +545,29 @@ export const orderController = async (req, res) => {
     console.log(error);
   }
 };
+
+
+
+export const productModelController = async (req, res) => {
+  try {
+    const { productId } = req.params;
+    const { model } = req.body;
+    const product = await productModel.findByIdAndUpdate(
+      productId,
+      model ,
+      { new: true }
+    );
+    res.json(product);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Error While Updateing products",
+      error,
+    });
+  }
+};
+
 
 //reviews
 // export const reviewController = async (req, res) => {

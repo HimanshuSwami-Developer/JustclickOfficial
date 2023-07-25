@@ -17,7 +17,8 @@ import {
   updateProductController,
   orderController,
   CheckoutPayment,
-  VerifyPayment
+  VerifyPayment,
+  productModelController
   // reviewController,
   // getReviews,
 } from "../controllers/productController.js";
@@ -99,6 +100,10 @@ router.post("/checkout",CheckoutPayment);
 //rezor
 router.post("/verify",VerifyPayment);
 
+// router.put(
+//   "/product-status/:productId",
+//   productModelController
+// );
 
 //token
 router.get("/braintree/token", braintreeTokenController);

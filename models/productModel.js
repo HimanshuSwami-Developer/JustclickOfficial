@@ -22,6 +22,24 @@ const productSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    importantDescription: {
+      type: String,
+      },
+      
+    extraDescription: {
+      type: String,
+      },
+    
+      size:{
+        default:"M",
+      type: String,
+      },
+    
+      model:{
+        Default:"Sumsung Galaxy",
+        type: String,
+        },
+
     category: {
       type: mongoose.ObjectId,
       ref: "Category",
