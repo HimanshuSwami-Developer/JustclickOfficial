@@ -95,9 +95,9 @@ app.get("/api/getURL",(req,res)=>{
 
 
 //rest api
-app.get("/", (req, res) => {
+app.get("*", (req, res) => {
   res.redirect(
-    `https://sore-pear-badger-cape.cyclic.app/api/v1/product/verify`,
+    `https://sore-pear-badger-cape.cyclic.app/`,
   );
   
   // res.send("<center><h1>ORDER SUCCESSFUL</h1><center>");
