@@ -6,13 +6,36 @@ const orderSchema = new mongoose.Schema(
       {
         type: mongoose.ObjectId,
         ref: "Products",
+       
       },
+       
     ],
+   
+    size:
+   [ {
+      // required:true,
+    Default:"M",
+  type: String,
+  },],
+    
+  model:
+    [{
+    // required:true,
+    Default:"Sumsung Galaxy",
+    type: String,
+    },],
+  
+ 
     payment: {},
     buyer: {
       type: mongoose.ObjectId,
       ref: "users",
     },
+    
+    total:{
+      type:String,
+    },
+
     status: {
       type: String,
       default: "Not Process",

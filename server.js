@@ -96,11 +96,13 @@ app.get("/api/getURL",(req,res)=>{
 
 //rest api
 app.get("*", (req, res) => {
-  res.redirect(
+  setTimeout(async ()=> {
+      res.redirect(
     `https://sore-pear-badger-cape.cyclic.app/`,
   );
   
-  // res.send("<center><h1>ORDER SUCCESSFUL</h1><center>");
+      }, 10000);
+  res.send("<div style='display: flex; flex-direction: column;height: 90vh;align-items: center; justify-content: center;'><center><h1>ORDER SUCCESSFUL</h1><p>Thank you For shopping</p><p>After 10 second we Move to Homepage </p><center></div>");
 });
 
 //PORT

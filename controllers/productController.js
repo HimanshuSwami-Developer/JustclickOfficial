@@ -28,7 +28,7 @@ var gateway = new braintree.BraintreeGateway({
 
 export const createProductController = async (req, res) => {
   try {
-    const { name, description, price, userquantity,category,brand, quantity,model,importantDescription,extraDescription, size,shipping } =
+    const { name, description, price, userquantity,category,brand, quantity,importantDescription,extraDescription,shipping } =
       req.fields;
     const { photo } = req.files;
     //alidation
@@ -159,7 +159,7 @@ export const deleteProductController = async (req, res) => {
 //upate producta
 export const updateProductController = async (req, res) => {
   try {
-    const { name, description, price,userquantity, category,brand,quantity,model,importantDescription,extraDescription, size, shipping } =
+    const { name, description, price,userquantity, category,brand,quantity,importantDescription,extraDescription,  shipping } =
       req.fields;
     const { photo } = req.files;
     //alidation
@@ -433,6 +433,7 @@ export const brainTreePaymentController = async (req, res) => {
       function (error, result) {
         if (result) {
           const order = new orderModel({
+             
             products: cart,
             payment: result,
             buyer: req.user._id,
@@ -526,19 +527,26 @@ export const VerifyPayment= async (req,res)=>{
 //payment order
 export const orderController = async (req, res) => {
   try {
-    const { cart,user } = req.body;
+    const { cart,user,size,model } = req.body;
     let total = 0;
     cart.map((i) => {
       total += i.price;
     });
     console.log(cart);
     if (true) {
+      console.log(total);
       const order = new orderModel({
+        // productName:cart.name,
+        total:total,
         products: cart,
+        model:model,
+        size:size,
         payment: true,
         buyer: user._id,
       }).save();
       res.json({ ok: true });
+
+      console.log(order);
     } 
 
   } catch (error) {

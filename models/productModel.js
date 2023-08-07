@@ -30,15 +30,6 @@ const productSchema = new mongoose.Schema(
       type: String,
       },
     
-      size:{
-        default:"M",
-      type: String,
-      },
-    
-      model:{
-        Default:"Sumsung Galaxy",
-        type: String,
-        },
 
     category: {
       type: mongoose.ObjectId,
