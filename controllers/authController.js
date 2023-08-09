@@ -6,7 +6,7 @@ import JWT from "jsonwebtoken";
 
 export const registerController = async (req, res) => {
   try {
-    const { name, email, password, phone, address,address2, answer } = req.body;
+    const { name, email, password, phone, address,address2,city,state, answer } = req.body;
     //validations
     if (!name) {
       return res.send({ error: "Name is Required" });
@@ -25,6 +25,12 @@ export const registerController = async (req, res) => {
     }
     if (!address2) {
       return res.send({ message: "Address 2 is Required" });
+    }
+    if (!city) {
+      return res.send({ message: "City is Required" });
+    }
+    if (!state) {
+      return res.send({ message: "State is Required" });
     }
     if (!answer) {
       return res.send({ message: "Answer is Required" });
@@ -47,6 +53,8 @@ export const registerController = async (req, res) => {
       phone,
       address,
       address2,
+      city,
+      state,
       password: hashedPassword,
       answer,
     }).save();
@@ -106,6 +114,8 @@ export const loginController = async (req, res) => {
         phone: user.phone,
         address: user.address,
         address2:user.address2,
+        state: user.state,
+        city:user.city,
         role: user.role,
       },
       token,
@@ -173,7 +183,7 @@ export const testController = (req, res) => {
 //update prfole
 export const updateProfileController = async (req, res) => {
   try {
-    const { name, email, password, address,address2, phone } = req.body;
+    const { name, email, password, address,address2,city,state, phone } = req.body;
     const user = await userModel.findById(req.user._id);
     //password
     if (password && password.length < 6) {
@@ -188,6 +198,8 @@ export const updateProfileController = async (req, res) => {
         phone: phone || user.phone,
         address: address || user.address,
         address2: address2 || user.address2,
+        city: city || user.city,
+        state: state || user.state,
       },
       { new: true }
     );
