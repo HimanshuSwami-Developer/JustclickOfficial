@@ -81,8 +81,7 @@ export const getProductController = async (req, res) => {
       .find({})
       .populate("category")
       .select("-photo")
-      .limit(12)
-      .sort({ createdAt: -1 });
+      .sort({ createdAt: -1 });// .limit(12)
     res.status(200).send({
       success: true,
       counTotal: products.length,
@@ -308,8 +307,7 @@ export const realtedProductController = async (req, res) => {
         _id: { $ne: pid },
       })
       .select("-photo")
-      .limit(3)
-      .populate("category");
+      .populate("category"); // .limit(3)
     res.status(200).send({
       success: true,
       products,
