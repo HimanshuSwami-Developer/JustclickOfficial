@@ -81,6 +81,7 @@ export const getProductController = async (req, res) => {
       .find({})
       .populate("category")
       .select("-photo")
+      .limit(12)
       .sort({ createdAt: -1 });// .limit(12)
     res.status(200).send({
       success: true,
@@ -307,7 +308,8 @@ export const realtedProductController = async (req, res) => {
         _id: { $ne: pid },
       })
       .select("-photo")
-      .populate("category"); // .limit(3)
+      .limit(3)
+      .populate("category"); 
     res.status(200).send({
       success: true,
       products,
@@ -325,41 +327,15 @@ export const realtedProductController = async (req, res) => {
 
 
 
-// similar products
-// export const relatedProductController = async (req, res) => {
-//   try {
-//     const { pid, cid } = req.params;
-//     const products = await productModel
-//       .find({
-//         brand: cid,
-//         _id: { $ne: pid },
-//       })
-//       .select("-photo")
-//       .limit(3)
-//       .populate("brand");
-//     res.status(200).send({
-//       success: true,
-//       products,
-//     });
-//   } catch (error) {
-//     console.log(error);
-//     res.status(400).send({
-//       success: false,
-//       message: "error while geting related product",
-//       error,
-//     });
-//   }
-// };
-
-
-
 // get prdocyst by catgory
 export const productCategoryController = async (req, res) => {
   try {
     const category = await categoryModel.findOne({ slug: req.params.slug });
-    const products = await productModel.find({ category }).populate("category");
+    const products = await productModel.find({ category }).populate("category")
+    .select("-photo").limit(12).sort({createdAt:-1});
     res.status(200).send({
       success: true,
+      total:products.length,
       category,
       products,
     });
@@ -372,6 +348,55 @@ export const productCategoryController = async (req, res) => {
     });
   }
 };
+
+
+// product count
+export const categoryProductCountController = async (req, res) => {
+  try {
+    const category = await categoryModel.findOne({ slug: req.params.slug });
+    const total = await productModel.findOne({ category }).countDocuments();
+    res.status(200).send({
+      success: true,
+      total,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(400).send({
+      message: "Error in product count",
+      error,
+      success: false,
+    });
+  }
+};
+
+// product list base on page
+export const categoryProductListController = async (req, res) => {
+  try {
+    const perPage = 6;
+    const page = req.params.page ? req.params.page : 1;
+    const category = await categoryModel.findOne({ slug: req.params.slug });
+    // const products = await productModel.find({ category }).populate("category");
+    const products = await productModel
+      .find({ category })
+      .populate("category")
+      .select("-photo")
+      .skip((page - 1) * perPage)
+      .limit(perPage)
+      .sort({ createdAt: -1 });
+    res.status(200).send({
+      success: true,
+      products,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(400).send({
+      success: false,
+      message: "error in per page ctrl",
+      error,
+    });
+  }
+};
+
 
 
 // get prdocyst by brand

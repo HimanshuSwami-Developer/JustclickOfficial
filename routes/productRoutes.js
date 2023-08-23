@@ -18,7 +18,9 @@ import {
   orderController,
   CheckoutPayment,
   VerifyPayment,
-  productModelController
+  productModelController,
+  categoryProductListController,
+  categoryProductCountController
   // reviewController,
   // getReviews,
 } from "../controllers/productController.js";
@@ -76,6 +78,13 @@ router.get("/related-product/:pid/bid", realtedProductController);
 
 //category wise product
 router.get("/product-category/:slug", productCategoryController);
+
+//product categorycount
+router.get("/product-category/product-count/:slug", categoryProductCountController);
+
+//product category per page
+router.get("/product-category/product-list/:slug/:page", categoryProductListController);
+
 
 // router.get("/product-category/mobile-covers", productCategoryController);
 
