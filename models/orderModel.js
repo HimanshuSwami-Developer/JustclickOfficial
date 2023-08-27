@@ -25,11 +25,15 @@ const orderSchema = new mongoose.Schema(
     type: String,
     },],
   
- 
+    orders:[{
+    }],
     payment: {},
     buyer: {
       type: mongoose.ObjectId,
       ref: "users",
+    },
+    buyerName: {
+      type: String,
     },
     
     total:{

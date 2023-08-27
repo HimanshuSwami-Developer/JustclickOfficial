@@ -327,6 +327,7 @@ export const realtedProductController = async (req, res) => {
 };
 
 
+
 // get prdocyst by catgory
 export const productCategoryController = async (req, res) => {
   try {
@@ -355,7 +356,7 @@ export const productCategoryController = async (req, res) => {
 };
 
 
-// filters
+// filters by category
 export const categoryProductFiltersController = async (req, res) => {
   try {
     const { radio } = req.body;
@@ -401,7 +402,7 @@ export const categoryProductCountController = async (req, res) => {
 // product list base on page by category
 export const categoryProductListController = async (req, res) => {
   try {
-    const perPage = 3;
+    const perPage = 6;
     const page = req.params.page ? req.params.page : 1;
     const category = await categoryModel.findOne({ slug: req.params.slug });
     // const products = await productModel.find({ category }).populate("category");
@@ -409,7 +410,7 @@ export const categoryProductListController = async (req, res) => {
       .find({ category })
       .populate("category")
       .select("-photo")
-      .skip((page - 1) * perPage)
+      // .skip((page - 1) * perPage)
       .limit(perPage)
       .sort({ createdAt: -1 });
     res.status(200).send({
@@ -579,7 +580,7 @@ export const VerifyPayment= async (req,res)=>{
 //payment order
 export const orderController = async (req, res) => {
   try {
-    const { cart,user,size,model } = req.body;
+    const { cart,user,size,model,orders } = req.body;
     let total = 0;
     cart.map((i) => {
       total += i.price;
@@ -594,7 +595,9 @@ export const orderController = async (req, res) => {
         model:model,
         size:size,
         payment: true,
+        orders:orders,
         buyer: user._id,
+        buyerName: user.name,
       }).save();
       res.json({ ok: true });
 
