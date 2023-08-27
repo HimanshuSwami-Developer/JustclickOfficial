@@ -327,40 +327,31 @@ export const realtedProductController = async (req, res) => {
 };
 
 
-
 // get prdocyst by catgory
 export const productCategoryController = async (req, res) => {
   try {
-    // let categorySlug = ;
-     await categoryModel.findOne({ slug: req.params.slug }).then((category)=>{
-      console.log("Result :",category);
-      res.status(200).send({
-        success: true,
-        total:products.length,
-        message: "ALlProducts ",
-        category,
-        // products,
-      });
-    }
-  )}
-    // catch (error) {
-    //   console.log(error);
-    //   res.status(400).send({
-    //     success: false,
-    //     error: error.message,
-    //     message: "Error While Getting products",
-    //   });
     
-  catch(err){
-      console.log(err);
-  };
+    const category = await categoryModel.find({ slug:req.params.slug });
     // const products = await productModel.find({ category })
     // .populate("category")
     // .select("-photo")
     // .limit(12)
     // .sort({createdAt:-1});
-    
-
+    res.status(200).send({
+      success: true,
+      // total:products.length,
+      message: "all category Products ",
+      category,
+      // products,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(400).send({
+      success: false,
+      error: error.message,
+      message: "Error While Getting products",
+    });
+  }
 };
 
 
