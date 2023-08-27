@@ -95,7 +95,7 @@ app.get("/api/getURL",(req,res)=>{
 
 
 //rest api
-app.get("*", (req, res) => {
+app.get("/", (req, res) => {
   // setTimeout(async ()=> {
   //     res.redirect(
   //   `https://sore-pear-badger-cape.cyclic.app/`,
