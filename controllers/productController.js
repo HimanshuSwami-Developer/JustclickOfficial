@@ -331,18 +331,18 @@ export const realtedProductController = async (req, res) => {
 // get prdocyst by catgory
 export const productCategoryController = async (req, res) => {
   try {
-    const category = await categoryModel.findOne({ slug: req.params.slug });
-    const products = await productModel.find({ category })
-    .populate("category")
-    .select("-photo")
-    .limit(12)
-    .sort({createdAt:-1});
+    const category = await categoryModel.find({ slug: req.params.slug });
+    // const products = await productModel.find({ category })
+    // .populate("category")
+    // .select("-photo")
+    // .limit(12)
+    // .sort({createdAt:-1});
     res.status(200).send({
       success: true,
       total:products.length,
       message: "ALlProducts ",
       category,
-      products,
+      // products,
     });
   } catch (error) {
     console.log(error);
