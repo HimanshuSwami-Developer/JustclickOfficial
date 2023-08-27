@@ -6,8 +6,8 @@ const connectDB = async () => {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useCreateIndex: true,
-      useFindAndModify: false,  },process.env.MONGO_URL);
-      await parseAndLoadPlanetsData();
+    },process.env.MONGO_URL);
+      // await parseAndLoadPlanetsData();
     console.log(
       `Conneted To Mongodb Databse ${conn.connection.host}`.bgMagenta.white
     );
