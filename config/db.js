@@ -4,7 +4,7 @@ const connectDB = async () => {
   try {
     const conn = await mongoose.connect({
       useNewUrlParser: true,
-      useUnifiedTopology: true,
+      // useUnifiedTopology: true,
       // useCreateIndex: true,
     },process.env.MONGO_URL);
       // await parseAndLoadPlanetsData();
