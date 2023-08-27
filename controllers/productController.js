@@ -401,7 +401,7 @@ export const categoryProductCountController = async (req, res) => {
 // product list base on page by category
 export const categoryProductListController = async (req, res) => {
   try {
-    const perPage = 2;
+    const perPage = 3;
     const page = req.params.page ? req.params.page : 1;
     const category = await categoryModel.findOne({ slug: req.params.slug });
     // const products = await productModel.find({ category }).populate("category");
