@@ -20,7 +20,8 @@ import {
   VerifyPayment,
   productModelController,
   categoryProductListController,
-  categoryProductCountController
+  categoryProductCountController,
+  categoryProductFiltersController
   // reviewController,
   // getReviews,
 } from "../controllers/productController.js";
@@ -81,6 +82,9 @@ router.get("/product-category/:slug", productCategoryController);
 
 //product categorycount
 router.get("/product-category/product-count/:slug", categoryProductCountController);
+
+//filter category
+router.post("/product-filters-category", categoryProductFiltersController);
 
 //product category per page
 router.get("/product-category/product-list/:slug/:page", categoryProductListController);
