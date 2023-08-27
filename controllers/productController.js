@@ -331,7 +331,11 @@ export const realtedProductController = async (req, res) => {
 // get prdocyst by catgory
 export const productCategoryController = async (req, res) => {
   try {
-    const category = await categoryModel.find({ slug: req.params.slug });
+    var categorySlug = req.params.slug;
+    const category = await categoryModel.findOne({ categorySlug },function(err){
+      if(err){
+          console.log(err);
+      } });
     // const products = await productModel.find({ category })
     // .populate("category")
     // .select("-photo")

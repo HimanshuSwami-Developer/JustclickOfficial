@@ -3,7 +3,6 @@ import colors from "colors";
 const connectDB = async () => {
   try {
     const conn = await mongoose.connect(process.env.MONGO_URL);
-      // await parseAndLoadPlanetsData();
     console.log(
       `Conneted To Mongodb Databse ${conn.connection.host}`.bgMagenta.white
     );
