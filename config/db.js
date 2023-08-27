@@ -3,8 +3,8 @@ import colors from "colors";
 const connectDB = async () => {
   try {
     const conn = await mongoose.connect({
-      useNewUrlParser: true,
-      // useUnifiedTopology: true,
+      // useNewUrlParser: true,
+      useUnifiedTopology: true,
       // useCreateIndex: true,
     },process.env.MONGO_URL);
       // await parseAndLoadPlanetsData();
