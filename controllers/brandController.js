@@ -1,16 +1,18 @@
 import brandModel from "../models/brandModel.js";
 import slugify from "slugify";
+
+// Create a new brand
 export const createBrandController = async (req, res) => {
   try {
     const { name } = req.body;
     if (!name) {
-      return res.status(401).send({ message: "Name is required" });
+      return res.status(400).send({ message: "Name is required" });
     }
     const existingBrand = await brandModel.findOne({ name });
     if (existingBrand) {
       return res.status(200).send({
         success: false,
-        message: "Brand Already Exisits",
+        message: "Brand Already Exists",
       });
     }
     const brand = await new brandModel({
@@ -19,7 +21,7 @@ export const createBrandController = async (req, res) => {
     }).save();
     res.status(201).send({
       success: true,
-      message: "new brand created",
+      message: "New brand created successfully",
       brand,
     });
   } catch (error) {
@@ -27,12 +29,12 @@ export const createBrandController = async (req, res) => {
     res.status(500).send({
       success: false,
       error,
-      message: "Errro in Brand",
+      message: "Error in brand creation",
     });
   }
 };
 
-//update brand
+// Update brand
 export const updateBrandController = async (req, res) => {
   try {
     const { name } = req.body;
@@ -44,7 +46,7 @@ export const updateBrandController = async (req, res) => {
     );
     res.status(200).send({
       success: true,
-      messsage: "Brand Updated Successfully",
+      message: "Brand updated successfully",
       brand,
     });
   } catch (error) {
@@ -57,32 +59,32 @@ export const updateBrandController = async (req, res) => {
   }
 };
 
-// get all cat
-export const brandControlller = async (req, res) => {
+// Get all brands
+export const brandController = async (req, res) => {
   try {
-    const brand = await brandModel.find({});
+    const brands = await brandModel.find({});
     res.status(200).send({
       success: true,
-      message: "All brands List",
-      brand,
+      message: "All brands list",
+      brands,
     });
   } catch (error) {
     console.log(error);
     res.status(500).send({
       success: false,
       error,
-      message: "Error while getting all categories",
+      message: "Error while getting all brands",
     });
   }
 };
 
-// single brand
+// Get a single brand by slug
 export const singleBrandController = async (req, res) => {
   try {
     const brand = await brandModel.findOne({ slug: req.params.slug });
     res.status(200).send({
       success: true,
-      message: "Get SIngle Brand SUccessfully",
+      message: "Brand fetched successfully",
       brand,
     });
   } catch (error) {
@@ -90,25 +92,25 @@ export const singleBrandController = async (req, res) => {
     res.status(500).send({
       success: false,
       error,
-      message: "Error While getting Single Brand",
+      message: "Error while getting single brand",
     });
   }
 };
 
-//delete brand
-export const deleteBrandCOntroller = async (req, res) => {
+// Delete a brand
+export const deleteBrandController = async (req, res) => {
   try {
     const { id } = req.params;
     await brandModel.findByIdAndDelete(id);
     res.status(200).send({
       success: true,
-      message: "Categry Deleted Successfully",
+      message: "Brand deleted successfully",
     });
   } catch (error) {
     console.log(error);
     res.status(500).send({
       success: false,
-      message: "error while deleting brand",
+      message: "Error while deleting brand",
       error,
     });
   }

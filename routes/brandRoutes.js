@@ -1,9 +1,9 @@
 import express from "express";
 import { isAdmin, requireSignIn } from "./../middlewares/authMiddleware.js";
 import {
-  brandControlller,
+  brandController,
   createBrandController,
-  deleteBrandCOntroller,
+  deleteBrandController,
   singleBrandController,
   updateBrandController,
 } from "./../controllers/brandController.js";
@@ -28,7 +28,7 @@ router.put(
 );
 
 //getALl brand
-router.get("/get-brand", brandControlller);
+router.get("/get-brand", brandController);
 
 //single brand
 router.get("/single-brand/:slug", singleBrandController);
@@ -38,7 +38,7 @@ router.delete(
   "/delete-brand/:id",
   requireSignIn,
   isAdmin,
-  deleteBrandCOntroller
+  deleteBrandController
 );
 
 export default router;

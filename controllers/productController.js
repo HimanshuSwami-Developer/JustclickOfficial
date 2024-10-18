@@ -12,6 +12,42 @@ import reviewsModel from "../models/reviewsModel.js";
 import crypto from "crypto";
 import  {Payment}  from "./../models/paymentModel.js";
 // import PaytmChecksum from "./PaytmChecksum";
+import { body, validationResult } from 'express-validator';
+
+export const createProductController = [
+  // Validate input fields
+  body('name').notEmpty().withMessage('Name is Required'),
+  body('description').notEmpty().withMessage('Description is Required'),
+  body('price').isFloat({ gt: 0 }).withMessage('Price must be greater than 0'),
+  body('userquantity').notEmpty().withMessage('User quantity is Required'),
+  body('category').notEmpty().withMessage('Category is Required'),
+  body('brand').notEmpty().withMessage('Brand is Required'),
+  body('quantity').isInt({ min: 1 }).withMessage('Quantity must be at least 1'),
+  // Process the request after validation
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    try {
+      const { name, description, price, userquantity, category, brand, quantity, shipping } = req.fields;
+      const { photo } = req.files;
+
+      const product = new productModel({ ...req.fields, slug: slugify(name) });
+      if (photo) {
+        product.photo.data = fs.readFileSync(photo.path);
+        product.photo.contentType = photo.type;
+      }
+
+      await product.save();
+      res.status(201).json({ success: true, message: 'Product Created Successfully', product });
+    } catch (error) {
+      res.status(500).json({ success: false, message: 'Error in creating product', error });
+    }
+  }
+];
+
 
 
 dotenv.config();
@@ -25,54 +61,6 @@ var gateway = new braintree.BraintreeGateway({
 });
 
 
-
-export const createProductController = async (req, res) => {
-  try {
-    const { name, description, price, userquantity,category,brand, quantity,importantDescription,extraDescription,shipping } =
-      req.fields;
-    const { photo } = req.files;
-    //alidation
-    switch (true) {
-      case !name:
-        return res.status(500).send({ error: "Name is Required" });
-      case !description:
-        return res.status(500).send({ error: "Description is Required" });
-      case !price:
-        return res.status(500).send({ error: "Price is Required" });
-      case !userquantity:
-        return res.status(500).send({ error: "userquantity is Required" });  
-      case !category:
-        return res.status(500).send({ error: "Category is Required" });         
-      case !brand:
-        return res.status(500).send({ error: "brand is Required" });
-      case !quantity:
-        return res.status(500).send({ error: "Quantity is Required" });
-      case photo && photo.size > 1000000:
-        return res
-          .status(500)
-          .send({ error: "photo is Required and should be less then 1mb" });
-    }
-
-    const products = new productModel({ ...req.fields, slug: slugify(name) });
-    if (photo) {
-      products.photo.data = fs.readFileSync(photo.path);
-      products.photo.contentType = photo.type;
-    }
-    await products.save();
-    res.status(201).send({
-      success: true,
-      message: "Product Created Successfully",
-      products,
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(500).send({
-      success: false,
-      error,
-      message: "Error in crearing product",
-    });
-  }
-};
 
 //get all products
 export const getProductController = async (req, res) => {
